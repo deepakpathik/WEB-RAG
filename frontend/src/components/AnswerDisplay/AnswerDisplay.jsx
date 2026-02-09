@@ -2,19 +2,17 @@ import './AnswerDisplay.css'
 import SourceCard from '../SourceCard/SourceCard'
 import ConfidenceMeter from '../ConfidenceMeter/ConfidenceMeter'
 import QueryTags from '../QueryTags/QueryTags'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 function AnswerDisplay({ response }) {
-    const formatAnswer = (text) => {
-        const parts = text.split(/(\[\d+\])/)
-        return parts.map((part, index) => {
-            if (/^\[\d+\]$/.test(part)) {
-                return <span key={index} className="citation">{part}</span>
-            }
-            return part
-        })
+    // Process text to turn [1] into markdown links [[1]](#source-1)
+    const processText = (text) => {
+        return text.replace(/\[(\d+)\]/g, '[[$1]](#source-$1)')
     }
 
     const mainAnswer = response.answer.split('---')[0].trim()
+    const processedAnswer = processText(mainAnswer)
 
     return (
         <div className="answer-display">
@@ -28,7 +26,23 @@ function AnswerDisplay({ response }) {
             <div className="answer-section">
                 <h2 className="section-title">Answer</h2>
                 <div className="answer-content">
-                    <p>{formatAnswer(mainAnswer)}</p>
+                    <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                            a: (props) => {
+                                if (props.href && props.href.startsWith('#source-')) {
+                                    return (
+                                        <a {...props} className="citation">
+                                            {props.children}
+                                        </a>
+                                    )
+                                }
+                                return <a {...props} target="_blank" rel="noopener noreferrer" />
+                            }
+                        }}
+                    >
+                        {processedAnswer}
+                    </ReactMarkdown>
                 </div>
             </div>
 
@@ -40,10 +54,9 @@ function AnswerDisplay({ response }) {
                     </h2>
                     <div className="sources-grid">
                         {response.sources.map((source, index) => (
-                            <SourceCard
-                                key={source.id || index}
-                                source={source}
-                            />
+                            <div key={source.id || index} id={`source-${source.id || index + 1}`}>
+                                <SourceCard source={source} />
+                            </div>
                         ))}
                     </div>
                 </div>

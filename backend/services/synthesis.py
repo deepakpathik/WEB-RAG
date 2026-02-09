@@ -12,6 +12,12 @@ Rules:
 4. If information is insufficient, state what's missing
 5. Be concise but comprehensive
 6. Never make up information
+7. Use Markdown formatting for better readability:
+   - Use bullet points or numbered lists for steps or items
+   - Use **bold** for key terms
+   - Use *italics* for emphasis
+   - Use tables for comparisons or structured data
+   - Use > blockquotes for important notes
 
 Question: {question}
 
@@ -19,7 +25,7 @@ Question: {question}
 
 Format:
 ANSWER:
-[Your synthesized answer with inline citations]
+[Your synthesized answer with inline citations and markdown formatting]
 
 CONFIDENCE: [0.0-1.0]
 SUFFICIENT: [yes/no]
