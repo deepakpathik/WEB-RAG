@@ -1,12 +1,19 @@
 .source-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     padding: 1.25rem;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
     text-decoration: none;
     color: inherit;
     transition: all var(--transition-normal);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
     animation: slideUp var(--transition-slow) ease-out;
     animation-fill-mode: both;
 }
