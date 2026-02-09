@@ -11,132 +11,104 @@ An AI-powered research assistant that answers questions by searching the web, ga
 - **Citation System**: Inline citations `[1]`, `[2]` with full source list
 - **Confidence Scoring**: Reports confidence level (0.0-1.0) in the answer
 - **Insufficient Info Handling**: Gracefully handles cases with limited information
-
-## Architecture
-
-```
-User Question
-      ↓
-┌─────────────────────────┐
-│  Query Decomposer       │ → Breaks question into 1-5 search queries
-└─────────────────────────┘
-      ↓
-┌─────────────────────────┐
-│  Search Tool            │ → Executes parallel web searches
-└─────────────────────────┘
-      ↓
-┌─────────────────────────┐
-│  Source Manager         │ → Deduplicates and tracks sources
-└─────────────────────────┘
-      ↓
-┌─────────────────────────┐
-│  Synthesis Engine       │ → LLM generates answer with citations
-└─────────────────────────┘
-      ↓
-Structured Response with Sources
-```
-
-## Installation
-
-1. Clone the repository
-2. Create a virtual environment:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install fastapi uvicorn langchain langchain-google-genai langchain-community duckduckgo-search python-dotenv pydantic
-   ```
-4. Create `.env` file with your API keys:
-   ```
-   GOOGLE_API_KEY=your_google_api_key_here
-   ```
-
-## Running the Server
-
-```bash
-fastapi dev main.py
-```
-
-The server will start at `http://localhost:8000`
-
-## API Endpoints
-
-### POST /ask
-Submit a research question and receive a structured response.
-
-**Request:**
-```json
-{
-  "question": "What are the benefits of renewable energy?"
-}
-```
-
-**Response:**
-```json
-{
-  "answer": "Renewable energy offers numerous benefits [1]. These include reduced carbon emissions [2], lower long-term costs...\n\n---\n**Sources:**\n[1] [Title](URL) - domain.com\n[2] [Title](URL) - domain.com",
-  "sources": [
-    {
-      "id": "[1]",
-      "url": "https://example.com/article",
-      "title": "Benefits of Renewable Energy",
-      "snippet": "Renewable energy sources...",
-      "domain": "example.com"
-    }
-  ],
-  "is_sufficient": true,
-  "confidence": 0.85,
-  "queries_used": ["benefits of renewable energy", "renewable energy advantages"],
-  "original_question": "What are the benefits of renewable energy?"
-}
-```
-
-### POST /ask/simple
-Simplified endpoint returning just the answer string.
-
-**Response:**
-```json
-{
-  "answer": "The synthesized answer with citations..."
-}
-```
-
-### GET /health
-Health check endpoint.
+- **Modern React UI**: Clean, responsive dark-themed frontend
 
 ## Project Structure
 
 ```
-rag/
-├── main.py                 # FastAPI application
-├── core/
-│   ├── config.py           # Environment configuration
-│   └── llm.py              # LLM initialization
-├── agents/
-│   └── research_agent.py   # LangChain agent setup
-├── services/
-│   ├── query_decomposer.py # Query decomposition logic
-│   ├── source_manager.py   # Source tracking and citations
-│   ├── synthesis.py        # Answer synthesis engine
-│   └── research_service.py # Pipeline orchestration
-├── schemas/
-│   ├── request_models.py   # Request schemas
-│   └── response_models.py  # Response schemas
-├── tools/
-│   └── search_tool.py      # Web search integration
-└── utils/
-    └── error_handler.py    # Error handling utilities
+WEB-RAG/
+├── backend/               # FastAPI Backend
+│   ├── main.py           # FastAPI application
+│   ├── requirements.txt  # Python dependencies
+│   ├── .env              # Environment variables (GOOGLE_API_KEY)
+│   ├── core/             # Configuration and LLM setup
+│   ├── agents/           # LangChain agent setup
+│   ├── services/         # Query decomposition, synthesis, research service
+│   ├── schemas/          # Request/Response models
+│   ├── tools/            # Web search integration
+│   └── utils/            # Error handling utilities
+│
+└── frontend/              # React Frontend (Vite)
+    ├── package.json
+    ├── src/
+    │   ├── App.jsx       # Main application component
+    │   ├── index.css     # Design system & base styles
+    │   ├── services/     # API service layer
+    │   └── components/   # UI Components
+    │       ├── SearchInput/      # Question input field
+    │       ├── LoadingSpinner/   # Loading animation
+    │       ├── AnswerDisplay/    # Answer with citations
+    │       ├── SourceCard/       # Source citation cards
+    │       ├── ConfidenceMeter/  # Confidence score display
+    │       └── QueryTags/        # Search queries used
+    └── ...
+```
+
+## Quick Start
+
+### 1. Setup Backend
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Create `.env` file:
+```
+GOOGLE_API_KEY=your_google_api_key_here
+```
+
+### 2. Setup Frontend
+
+```bash
+cd frontend
+npm install
+```
+
+### 3. Run the Application
+
+**Terminal 1 - Backend:**
+```bash
+cd backend
+source .venv/bin/activate
+uvicorn main:app --reload
+```
+Backend runs at: http://localhost:8000
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm run dev
+```
+Frontend runs at: http://localhost:5173
+
+## API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | API info |
+| `/health` | GET | Health check |
+| `/ask` | POST | Submit research question |
+| `/ask/simple` | POST | Simplified response |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8000/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question": "What are the benefits of renewable energy?"}'
 ```
 
 ## Technologies
 
-- **Framework**: FastAPI
-- **LLM**: Google Gemini 2.5 Flash
-- **Search**: DuckDuckGo (free, no API key required)
-- **Agent Framework**: LangChain
-- **Validation**: Pydantic
+| Layer | Technologies |
+|-------|-------------|
+| **Backend** | FastAPI, Python 3.13, LangChain, Google Gemini |
+| **Search** | DuckDuckGo (free, no API key) |
+| **Frontend** | React, Vite, CSS Variables |
+| **Validation** | Pydantic |
 
 ## License
 

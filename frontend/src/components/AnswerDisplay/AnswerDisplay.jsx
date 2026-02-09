@@ -1,5 +1,7 @@
 import './AnswerDisplay.css'
 import SourceCard from '../SourceCard/SourceCard'
+import ConfidenceMeter from '../ConfidenceMeter/ConfidenceMeter'
+import QueryTags from '../QueryTags/QueryTags'
 
 function AnswerDisplay({ response }) {
     const formatAnswer = (text) => {
@@ -16,6 +18,13 @@ function AnswerDisplay({ response }) {
 
     return (
         <div className="answer-display">
+            <ConfidenceMeter
+                confidence={response.confidence}
+                isSufficient={response.is_sufficient}
+            />
+
+            <QueryTags queries={response.queries_used} />
+
             <div className="answer-section">
                 <h2 className="section-title">Answer</h2>
                 <div className="answer-content">
@@ -34,7 +43,6 @@ function AnswerDisplay({ response }) {
                             <SourceCard
                                 key={source.id || index}
                                 source={source}
-                                style={{ animationDelay: `${index * 0.1}s` }}
                             />
                         ))}
                     </div>

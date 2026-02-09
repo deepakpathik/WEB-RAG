@@ -1,0 +1,68 @@
+.confidence-meter {
+    padding: 1rem 1.25rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+}
+
+.confidence-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.confidence-label {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.confidence-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.confidence-value.high {
+    color: var(--color-success);
+}
+
+.confidence-value.medium {
+    color: var(--color-warning);
+}
+
+.confidence-value.low {
+    color: var(--color-error);
+}
+
+.confidence-bar {
+    height: 6px;
+    background: var(--color-bg-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease-out;
+}
+
+.confidence-fill.high {
+    background: var(--color-success);
+}
+
+.confidence-fill.medium {
+    background: var(--color-warning);
+}
+
+.confidence-fill.low {
+    background: var(--color-error);
+}
+
+.insufficient-warning {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--color-warning);
+}
