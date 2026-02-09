@@ -3,7 +3,6 @@ uvicorn
 langchain
 langchain-google-genai
 langchain-community
-duckduckgo-search
-ddgs
+google-search-results
 python-dotenv
 pydantic
