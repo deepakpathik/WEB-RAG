@@ -24,14 +24,16 @@ function SearchInput({ onSubmit, isLoading }) {
                     className="search-field"
                 />
             </div>
+
             <button
                 type="submit"
                 disabled={!question.trim() || isLoading}
                 className="search-button"
             >
-                {isLoading ? 'Researching...' : 'Research'}
+                <span>{isLoading ? 'Researching...' : 'Research'}</span>
+                {!isLoading && <span style={{ fontSize: '1.1em' }}>✨</span>}
             </button>
-        </form>
+        </form >
     )
 }
 

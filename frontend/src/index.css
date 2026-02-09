@@ -60,7 +60,7 @@ body {
   font-family: var(--font-sans);
   background-color: var(--color-bg-primary);
   background-image:
-    linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)),
+    linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.5)),
     url('./assets/website-bg.jpeg');
   background-size: cover;
   background-position: center;
