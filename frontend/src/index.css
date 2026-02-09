@@ -31,9 +31,14 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.15);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.15);
 
-  --transition-fast: 150ms ease;
+  --backdrop-blur: blur(16px);
+  --glass-bg: rgba(30, 41, 59, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms ease;
   --transition-slow: 400ms ease;
 }
@@ -53,7 +58,13 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-bg-primary);
+  background-color: var(--color-bg-primary);
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)),
+    url('./assets/website-bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--color-text-primary);
   min-height: 100vh;
   line-height: 1.6;

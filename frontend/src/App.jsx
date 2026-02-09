@@ -5,6 +5,8 @@ import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
 import AnswerDisplay from './components/AnswerDisplay/AnswerDisplay'
 import { askQuestion } from './services/api'
 
+import logo from './assets/logo.png'
+
 function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [response, setResponse] = useState(null)
@@ -30,10 +32,8 @@ function App() {
       <header className="header">
         <div className="header-content">
           <div className="logo">
-            <span className="logo-icon">🔬</span>
-            <h1>Research Assistant</h1>
+            <img src={logo} alt="Research Assistant" className="logo-image" />
           </div>
-          <p className="tagline">AI-powered research with web search and citations</p>
         </div>
       </header>
 
