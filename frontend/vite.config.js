@@ -11,4 +11,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/ask": "http://localhost:8000",
+      "/health": "http://localhost:8000",
+    },
+  },
 })
